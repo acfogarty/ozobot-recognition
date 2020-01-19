@@ -127,7 +127,7 @@ def build_cnn_model():
     return model
 
 
-def plot_labelled_images(x, y, y_predict=None):
+def plot_labelled_images(x, y, filename, y_predict=None):
     """
     Plot a random sample of images from x, with labels y
 
@@ -175,7 +175,7 @@ def plot_labelled_images(x, y, y_predict=None):
     size = figure.get_size_inches()
     figure.set_size_inches(size[0]*2, size[1]*2)
 
-    plt.show()
+    plt.savefig(filename, bbox_inches='tight')
 
 
 def main():
@@ -184,8 +184,6 @@ def main():
 
     x = preprocess_images(x)
     y = preprocess_labels(y)
-
-    plot_labelled_images(x, y)
 
     x_train, y_train, x_valid, y_valid, x_test, y_test = split_train_validation_test(x, y, 
                                                                                      split=[0.7, 0.1, 0.2])
@@ -212,7 +210,7 @@ def main():
 
     y_predict = model.predict(x_test)
 
-    plot_labelled_images(x_test, y_test, y_predict=y_predict)
+    plot_labelled_images(x_test, y_test, filename='examples_with_labels.png', y_predict=y_predict)
 
 
 if __name__ == '__main__':
